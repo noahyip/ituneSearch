@@ -2,8 +2,14 @@ package com.noahyip.keysoctest.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahyip.keysoctest.R
+import com.noahyip.keysoctest.adapter.ITuneSearchResultAdapter
 import com.noahyip.keysoctest.databinding.ActivityMainBinding
 import com.noahyip.keysoctest.viewModel.MainActivityViewModel
 
@@ -19,5 +25,24 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         binding.viewModel = viewModel
+
+        initView()
+    }
+
+    private fun initView() {
+        binding.rvResult.layoutManager = LinearLayoutManager(this)
+        val adapter = ITuneSearchResultAdapter(this)
+        binding.rvResult.adapter = adapter
+        binding.viewModel?.iTuneSearchResponse?.observe(this, Observer {
+            adapter.setData(it)
+        })
+    }
+
+    fun search(v: View) {
+        if(binding.etSearch.text.toString().isBlank()) {
+            Toast.makeText(this, "Please Enter Keyword to search", Toast.LENGTH_LONG).show()
+        }else{
+            viewModel.search(binding.etSearch.text.toString())
+        }
     }
 }
