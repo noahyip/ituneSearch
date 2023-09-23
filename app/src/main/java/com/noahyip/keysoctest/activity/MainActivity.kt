@@ -1,9 +1,11 @@
 package com.noahyip.keysoctest.activity
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.noahyip.keysoctest.R
 import com.noahyip.keysoctest.adapter.ITuneSearchResultAdapter
 import com.noahyip.keysoctest.databinding.ActivityMainBinding
+import com.noahyip.keysoctest.utils.LocaleUtils
 import com.noahyip.keysoctest.viewModel.MainActivityViewModel
 import com.noahyip.searchgallery.adapter.ITuneFilterAdapter
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,12 +35,11 @@ class MainActivity : AppCompatActivity() {
             "software",
             "ebook"
         )
+        val countryList = arrayListOf("US", "HK", "CN")
 
-        val countryList = arrayListOf(
-            "US", "HK", "CN"
-        )
     }
 
+    private lateinit var langList: Array<String>
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainActivityViewModel
 
@@ -53,13 +56,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        langList = arrayOf(
+            getString(com.noahyip.keysoctest.R.string.text_traditional_chinese),
+            getString(R.string.text_simplified_chinese),
+            getString(R.string.english)
+        )
+
         initCountryFilterRecyclerView()
         initMediaTypeFilterRecyclerView()
         initSearchResultRecyclerView()
     }
 
     private fun initCountryFilterRecyclerView() {
-        binding.rvFilterCountry.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvFilterCountry.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val adapter = ITuneFilterAdapter(this, countryList)
         adapter.setOnClickListener(object : ITuneFilterAdapter.OnClickListener {
 
@@ -78,7 +88,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initMediaTypeFilterRecyclerView() {
-        binding.rvFilterMedia.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvFilterMedia.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val adapter = ITuneFilterAdapter(this, mediaTypeList)
         adapter.setOnClickListener(object : ITuneFilterAdapter.OnClickListener {
 
@@ -142,7 +153,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun click_setting(v: View) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.text_choose_language))
+        builder.setItems(langList) { _, which ->
+            when (langList[which]) {
+                getString(R.string.text_traditional_chinese) -> LocaleUtils.updateLocale(
+                    this,
+                    Locale.TRADITIONAL_CHINESE
+                )
 
+                getString(R.string.text_simplified_chinese) -> LocaleUtils.updateLocale(
+                    this,
+                    Locale.SIMPLIFIED_CHINESE
+                )
+
+                else -> LocaleUtils.updateLocale(this, Locale.ENGLISH)
+            }
+            recreate()
+        }
+        builder.show()
     }
 
     fun click_fav(v: View) {

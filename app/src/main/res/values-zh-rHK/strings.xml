@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">keysocTest</string>
-    <string name="search_hint">Search songs, albums or artists</string>
-    <string name="search">Search</string>
-    <string name="error_empty_edit_text">Please Enter Keyword to search</string>
+    <string name="search_hint">搜尋歌曲、專輯或藝術家</string>
+    <string name="search">搜尋</string>
+    <string name="error_empty_edit_text">請輸入關鍵字進行搜尋</string>
+    <string name="text_filter_country">國家:</string>
+    <string name="text_filter_media_type">媒體類型:</string>
+    <string name="text_choose_language">選擇語言</string>
+    <string name="text_traditional_chinese">繁體中文</string>
+    <string name="text_simplified_chinese">簡體中文</string>
+    <string name="english">英文</string>
 </resources>
