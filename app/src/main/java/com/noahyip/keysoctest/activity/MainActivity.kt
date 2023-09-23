@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun search(v: View) {
+    fun click_search(v: View) {
         if (binding.etSearch.text.toString().isBlank()) {
             Toast.makeText(this, getString(R.string.error_empty_edit_text), Toast.LENGTH_LONG)
                 .show()
@@ -125,11 +125,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun filter(v: View) {
+    fun click_filter(v: View) {
         binding.llFilter.visibility = if (binding.llFilter.visibility == View.VISIBLE) {
             View.GONE
         } else {
             View.VISIBLE
         }
+    }
+
+    fun click_menu(v: View) {
+        binding.gpMenuOptions.visibility = if (binding.gpMenuOptions.visibility == View.VISIBLE) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
+
+    fun click_setting(v: View) {
+
+    }
+
+    fun click_fav(v: View) {
+
     }
 }

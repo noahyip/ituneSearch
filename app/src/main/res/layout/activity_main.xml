@@ -48,7 +48,7 @@
             android:layout_marginVertical="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_normal"
             android:background="@drawable/bkg_search_button"
-            android:onClick="search"
+            android:onClick="click_search"
             android:padding="@dimen/margin_small"
             android:src="@mipmap/img_search"
             app:layout_constraintEnd_toStartOf="@id/btn_filter"
@@ -61,7 +61,7 @@
             android:layout_height="@dimen/edit_text_height"
             android:layout_margin="@dimen/margin_small"
             android:background="@android:color/transparent"
-            android:onClick="filter"
+            android:onClick="click_filter"
             android:scaleType="fitCenter"
             android:src="@mipmap/img_filter"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,27 +72,31 @@
             android:id="@+id/ll_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:animateLayoutChanges="true"
-            app:layout_constraintTop_toBottomOf="@id/et_search"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/et_search">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_filter_media_type"
                 android:layout_margin="@dimen/margin_small"
-                android:textSize="@dimen/text_normal"/>
+                android:text="@string/text_filter_media_type"
+                android:textSize="@dimen/text_normal" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_filter_media"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_filter_country"
                 android:layout_margin="@dimen/margin_small"
-                android:textSize="@dimen/text_normal"/>
+                android:text="@string/text_filter_country"
+                android:textSize="@dimen/text_normal" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_filter_country"
                 android:layout_width="match_parent"
@@ -100,6 +104,48 @@
                 android:scrollbars="none" />
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/gp_menu_options"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:constraint_referenced_ids="fb_fav, fb_setting" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fb_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:onClick="click_fav"
+            android:src="@mipmap/img_fav_menu"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/fb_setting"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fb_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:onClick="click_setting"
+            android:src="@mipmap/img_setting"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/fb_menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fb_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:onClick="click_menu"
+            android:src="@mipmap/img_plus"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_result"
