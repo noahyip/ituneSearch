@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.noahyip.keysoctest.viewModel.MainActivityViewModel" />
@@ -10,59 +14,99 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        android:background="@color/colorLight">
+
+        <ImageView
+            android:id="@+id/iv_icon"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorLight">
+            android:layout_height="@dimen/image_normal"
+            android:layout_marginTop="@dimen/margin_small"
+            android:src="@mipmap/img_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/edit_text_height"
-                android:textColor="@color/colorDark"
-                android:background="@drawable/bkg_edit_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_search"
-                android:layout_marginVertical="@dimen/margin_small"
-                android:layout_marginStart="@dimen/margin_small"
-                android:padding="@dimen/margin_small"
-                android:textColorHint="@color/colorDark"
-                android:hint="@string/search_hint" />
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginVertical="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:background="@drawable/bkg_edit_text"
+            android:hint="@string/search_hint"
+            android:padding="@dimen/margin_small"
+            android:textColor="@color/colorDark"
+            android:textColorHint="@color/colorDark"
+            app:layout_constraintEnd_toStartOf="@id/btn_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon" />
 
-            <ImageButton
-                android:id="@+id/btn_search"
-                android:layout_width="@dimen/button_search_width"
-                android:layout_height="@dimen/edit_text_height"
-                android:src="@mipmap/img_search"
-                android:background="@drawable/bkg_button"
-                android:layout_marginVertical="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_normal"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_filter"
-                android:padding="@dimen/margin_small"
-                android:onClick="search"
-                app:tint="@color/white" />
-            <ImageButton
-                android:id="@+id/btn_filter"
-                android:layout_width="@dimen/buttn_width_normal"
-                android:layout_height="@dimen/edit_text_height"
-                android:src="@mipmap/img_filter"
-                android:scaleType="fitCenter"
-                android:background="@android:color/transparent"
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="@dimen/button_search_width"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginVertical="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:background="@drawable/bkg_search_button"
+            android:onClick="search"
+            android:padding="@dimen/margin_small"
+            android:src="@mipmap/img_search"
+            app:layout_constraintEnd_toStartOf="@id/btn_filter"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon"
+            app:tint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_filter"
+            android:layout_width="@dimen/button_width_normal"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@android:color/transparent"
+            android:onClick="filter"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/img_filter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon"
+            app:tint="@color/colorSecondary" />
+
+        <LinearLayout
+            android:id="@+id/ll_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:layout_constraintTop_toBottomOf="@id/et_search"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_media_type"
                 android:layout_margin="@dimen/margin_small"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="search"/>
+                android:textSize="@dimen/text_normal"/>
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_result"
+                android:id="@+id/rv_filter_media"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_filter_country"
                 android:layout_margin="@dimen/margin_small"
-                app:layout_constraintTop_toBottomOf="@id/et_search"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:textSize="@dimen/text_normal"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_filter_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+        </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_filter" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

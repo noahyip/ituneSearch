@@ -1,5 +1,6 @@
 package com.noahyip.keysoctest.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,14 +12,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.noahyip.keysoctest.R
 import com.noahyip.keysoctest.adapter.ITuneSearchResultAdapter
 import com.noahyip.keysoctest.databinding.ActivityMainBinding
-import com.noahyip.keysoctest.model.ITuneSearchResponse
 import com.noahyip.keysoctest.viewModel.MainActivityViewModel
+import com.noahyip.searchgallery.adapter.ITuneFilterAdapter
 
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        val mediaTypeList = arrayListOf(
+            "all",
+            "movie",
+            "podcast",
+            "music",
+            "musicVideo",
+            "audiobook",
+            "shortFilm",
+            "tvShow",
+            "software",
+            "ebook"
+        )
+
+        val countryList = arrayListOf(
+            "US", "HK", "CN"
+        )
+    }
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -32,6 +53,49 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        initCountryFilterRecyclerView()
+        initMediaTypeFilterRecyclerView()
+        initSearchResultRecyclerView()
+    }
+
+    private fun initCountryFilterRecyclerView() {
+        binding.rvFilterCountry.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val adapter = ITuneFilterAdapter(this, countryList)
+        adapter.setOnClickListener(object : ITuneFilterAdapter.OnClickListener {
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onClick(position: Int) {
+                viewModel.country = countryList[position]
+                //Change Color of select filter
+                adapter.selectItem = position
+                adapter.notifyDataSetChanged()
+                //Search with updated filter
+                viewModel.search(binding.etSearch.text.toString())
+            }
+        })
+        binding.rvFilterCountry.adapter = adapter
+
+    }
+
+    private fun initMediaTypeFilterRecyclerView() {
+        binding.rvFilterMedia.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val adapter = ITuneFilterAdapter(this, mediaTypeList)
+        adapter.setOnClickListener(object : ITuneFilterAdapter.OnClickListener {
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onClick(position: Int) {
+                viewModel.mediaType = mediaTypeList[position]
+                //Change Color of select filter
+                adapter.selectItem = position
+                adapter.notifyDataSetChanged()
+                //Search with updated filter
+                viewModel.search(binding.etSearch.text.toString())
+            }
+        })
+        binding.rvFilterMedia.adapter = adapter
+    }
+
+    private fun initSearchResultRecyclerView() {
         binding.rvResult.layoutManager = LinearLayoutManager(this)
         val adapter = ITuneSearchResultAdapter(this)
         binding.rvResult.adapter = adapter
@@ -53,13 +117,19 @@ class MainActivity : AppCompatActivity() {
 
     fun search(v: View) {
         if (binding.etSearch.text.toString().isBlank()) {
-            Toast.makeText(this, getString(R.string.error_empty_edit_text), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.error_empty_edit_text), Toast.LENGTH_LONG)
+                .show()
         } else {
             viewModel.search(binding.etSearch.text.toString())
+            binding.rvResult.smoothScrollToPosition(0)
         }
     }
 
     fun filter(v: View) {
-        //TODO
+        binding.llFilter.visibility = if (binding.llFilter.visibility == View.VISIBLE) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
     }
 }

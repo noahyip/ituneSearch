@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class ITuneSearchResponse (
     @SerializedName("resultCount" ) var resultCount : Int               = 0,
-    @SerializedName("results"     ) var results     : ArrayList<Results> = arrayListOf()
+    @SerializedName("results"     ) var results     : ArrayList<Results> = arrayListOf(),
+    var hasMore     : Boolean = true
 )
 
 data class Results (

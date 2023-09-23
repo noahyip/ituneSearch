@@ -30,7 +30,7 @@
         android:maxLines="2"
         app:layout_constraintStart_toEndOf="@id/cv_album"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_preview"
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginHorizontal="@dimen/margin_small"
         android:textSize="@dimen/text_h1"
@@ -44,11 +44,36 @@
         android:maxLines="1"
         app:layout_constraintStart_toEndOf="@id/cv_album"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_preview"
         android:layout_marginHorizontal="@dimen/margin_small"
         android:textSize="@dimen/text_normal"
         android:textColor="@color/colorDark"
         android:text="artist"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_hieght_normal"
+        android:layout_marginEnd="@dimen/image_small"
+        app:layout_constraintBaseline_toTopOf="@+id/gl_center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bkg_button"
+        android:text="Preview"
+        android:textColor="@color/colorLight"/>
+    <ImageView
+        android:id="@+id/iv_love"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@mipmap/img_love"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_preview"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

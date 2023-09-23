@@ -7,4 +7,5 @@
     <color name="colorTim">#9BF4FF</color>
     <color name="colorDark">#5E5E5E</color>
     <color name="colorLight">#FFFFFF</color>
+    <color name="colorFilterBtn">#818181</color>
 </resources>
