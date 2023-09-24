@@ -13,14 +13,15 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.noahyip.keysoctest.R
-import com.noahyip.keysoctest.apiService.ITuneService
 import com.noahyip.keysoctest.model.ITuneSearchResponse
+import com.noahyip.keysoctest.utils.SharePreferenceUtils
 
 
 class ITuneSearchResultAdapter(private val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var iTuneSearchResponse: ITuneSearchResponse? = null
+    private var favKeys = SharePreferenceUtils.getAllFavouriteKey(context)
     private companion object {
         val VIEW_TYPE_ITEM = 0
         val VIEW_TYPE_LOADING = 1
@@ -45,6 +46,7 @@ class ITuneSearchResultAdapter(private val context: Context) :
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("UseCompatLoadingForDrawables", "NotifyDataSetChanged")
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         if (viewHolder is ItemViewHolder) {
             iTuneSearchResponse?.let { response ->
@@ -57,6 +59,20 @@ class ITuneSearchResultAdapter(private val context: Context) :
                 viewHolder.btnPreview.setOnClickListener {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(response.results[position].previewUrl))
                     context.startActivity(intent)
+                }
+                if (favKeys.contains(response.results[position].trackId.toString())) {
+                    viewHolder.ivLove.setImageDrawable(context.getDrawable(R.mipmap.img_love))
+                } else {
+                    viewHolder.ivLove.setImageDrawable(context.getDrawable(R.mipmap.img_follow))
+                }
+                viewHolder.ivLove.setOnClickListener {
+                    if (favKeys.contains(response.results[position].trackId.toString())) {
+                        SharePreferenceUtils.removeFavourite(context, response.results[position].trackId.toString())
+                    } else {
+                        SharePreferenceUtils.addFavourite(context, response.results[position])
+                    }
+                    favKeys = SharePreferenceUtils.getAllFavouriteKey(context)
+                    notifyDataSetChanged()
                 }
             }
         }// else if loading view holder, but do not require extra handling for loading view

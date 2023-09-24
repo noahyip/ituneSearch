@@ -10,4 +10,5 @@
     <string name="text_traditional_chinese">繁體中文</string>
     <string name="text_simplified_chinese">簡體中文</string>
     <string name="english">英文</string>
+    <string name="text_favourites">收藏夾</string>
 </resources>

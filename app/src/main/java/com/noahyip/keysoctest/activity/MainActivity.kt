@@ -1,7 +1,8 @@
 package com.noahyip.keysoctest.activity
 
+import android.R.attr.value
 import android.annotation.SuppressLint
-import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -161,12 +162,10 @@ class MainActivity : AppCompatActivity() {
                     this,
                     Locale.TRADITIONAL_CHINESE
                 )
-
                 getString(R.string.text_simplified_chinese) -> LocaleUtils.updateLocale(
                     this,
                     Locale.SIMPLIFIED_CHINESE
                 )
-
                 else -> LocaleUtils.updateLocale(this, Locale.ENGLISH)
             }
             recreate()
@@ -175,6 +174,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun click_fav(v: View) {
-
+        val intent = Intent(this, FavouriteSongActivity::class.java)
+        startActivity(intent)
     }
 }

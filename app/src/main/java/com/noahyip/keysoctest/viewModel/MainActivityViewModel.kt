@@ -27,8 +27,7 @@ class MainActivityViewModel : ViewModel() {
             country,
             mediaType,
             Locale.getDefault().toString()
-        )
-            .enqueue(object : Callback<ITuneSearchResponse?> {
+        ).enqueue(object : Callback<ITuneSearchResponse?> {
                 override fun onResponse(
                     call: Call<ITuneSearchResponse?>,
                     response: Response<ITuneSearchResponse?>
